@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Delete Customer</h2>
+
+    <p>Are you sure you want to delete the customer "{{ customer.full_name }}"?</p>
+
+    <form method="post" action="{% url 'customer-delete' pk=customer.id %}">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{% url 'customer-list' %}">
+      <button type="submit" class="btn btn-danger">Delete</button>
+      <a href="{% url 'customer-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+{% endblock %}

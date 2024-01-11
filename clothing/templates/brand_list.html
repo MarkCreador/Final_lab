@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row mb-3">
+      <div class="col-md-8">
+        <h2 class="mb-0">Brand List</h2>
+      </div>
+      <div class="col-md-4 text-right">
+        <a href="{% url 'brand-create' %}" class="btn btn-success">Add Brand</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="mb-0">Brand List</h2>
+          </div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for brand in brands %}
+                  <tr>
+                    <th scope="row">{{ brand.id }}</th>
+                    <td>{{ brand.name }}</td>
+                    <td>
+                      <a href="{% url 'brand-detail' pk=brand.id %}" class="btn btn-info btn-sm">Detail</a>
+                      <a href="{% url 'brand-update' pk=brand.id %}" class="btn btn-warning btn-sm">Update</a>
+                      <a href="{% url 'brand-delete' pk=brand.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer text-muted">
+            <div class="pagination">
+              <span class="step-links">
+                {% if brands.has_previous %}
+                  <a href="?page=1" class="btn btn-secondary btn-sm">&laquo; first</a>
+                  <a href="?page={{ brands.previous_page_number }}" class="btn btn-secondary btn-sm">previous</a>
+                {% endif %}
+
+                <span class="current">
+                  Page {{ brands.number }} of {{ brands.paginator.num_pages }}.
+                </span>
+
+                {% if brands.has_next %}
+                  <a href="?page={{ brands.next_page_number }}" class="btn btn-secondary btn-sm">next</a>
+                  <a href="?page={{ brands.paginator.num_pages }}" class="btn btn-secondary btn-sm">last &raquo;</a>
+                {% endif %}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

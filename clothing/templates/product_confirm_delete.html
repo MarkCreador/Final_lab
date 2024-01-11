@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="mb-0">Confirm Delete</h2>
+          </div>
+          <div class="card-body">
+            <p>Are you sure you want to delete the product "{{ product.name }}"?</p>
+          </div>
+          <div class="card-footer text-muted">
+            <form method="post" action="{% url 'product-delete' pk=product.id %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Delete</button>
+              <a href="{% url 'product-detail' pk=product.id %}" class="btn btn-secondary">Cancel</a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

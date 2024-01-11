@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>{% if customer.id %}Update{% else %}Create{% endif %} Customer</h2>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <!-- Example: Full Name -->
+      <div class="form-group">
+        {{ form.full_name.label_tag }}
+        {{ form.full_name }}
+      </div>
+
+      <!-- Example: Email -->
+      <div class="form-group">
+        {{ form.email.label_tag }}
+        {{ form.email }}
+      </div>
+
+      <!-- Example: Phone -->
+      <div class="form-group">
+        {{ form.phone.label_tag }}
+        {{ form.phone }}
+      </div>
+
+      <!-- Add more form fields as needed -->
+
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+    <p>
+      {% if customer.id %}
+        <!-- Example: Cancel and View Customer Detail -->
+        <a href="{% url 'customer-detail' pk=customer.id %}" class="btn btn-secondary">Cancel and View Customer Detail</a>
+      {% else %}
+        <!-- Example: Cancel and View Customer List -->
+        <a href="{% url 'customer-list' %}" class="btn btn-secondary">Cancel and View Customer List</a>
+      {% endif %}
+    </p>
+  </div>
+{% endblock %}

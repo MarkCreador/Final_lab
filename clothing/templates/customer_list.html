@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="row mb-3">
+      <div class="col-md-12 text-right">
+        <!-- Add Customer Button -->
+        <a href="{% url 'customer-create' %}" class="btn btn-success">Add Customer</a>
+      </div>
+    </div>
+
+    <h2>Customer List</h2>
+
+    <div class="row">
+      {% for customer in customers %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ customer.full_name }}</h5>
+              <p class="card-text">Email: {{ customer.email }}</p>
+              <p class="card-text">Phone: {{ customer.phone }}</p>
+              <!-- Add more customer details as needed -->
+
+              <!-- Example: View Customer Details -->
+              <a href="{% url 'customer-detail' pk=customer.pk %}" class="btn btn-primary">View Details</a>
+
+              <!-- Example: Update Customer -->
+              <a href="{% url 'customer-update' pk=customer.pk %}" class="btn btn-warning">Update</a>
+
+              <!-- Example: Delete Customer -->
+              <a href="{% url 'customer-delete' pk=customer.pk %}" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ customer.pk }}">Delete</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal{{ customer.pk }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Customer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to delete the customer "{{ customer.full_name }}"?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="{% url 'customer-delete' pk=customer.pk %}" class="btn btn-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Delete Modal -->
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+      <div class="pagination mt-4">
+        <span class="step-links">
+          {% if customers.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ customers.previous_page_number }}">previous</a>
+          {% endif %}
+
+          <span class="current">
+            Page {{ customers.number }} of {{ customers.paginator.num_pages }}.
+          </span>
+
+          {% if customers.has_next %}
+            <a href="?page={{ customers.next_page_number }}">next</a>
+            <a href="?page={{ customers.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+        </span>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

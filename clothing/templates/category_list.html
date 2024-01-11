@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="row mb-3">
+      <div class="col-md-12 text-right">
+        <a href="{% url 'category-create' %}" class="btn btn-success">Add Category</a>
+      </div>
+    </div>
+
+    <h2 class="mb-4">Categories</h2>
+
+    <div class="row">
+      {% for category in categories %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ category.name }}</h5>
+              <a href="{% url 'category-detail' pk=category.pk %}" class="btn btn-primary">View Details</a>
+              <a href="{% url 'category-update' pk=category.pk %}" class="btn btn-warning">Update</a>
+              <a href="{% url 'category-delete' pk=category.pk %}" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ category.pk }}">Delete</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal{{ category.pk }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to delete the category "{{ category.name }}"?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="{% url 'category-delete' pk=category.pk %}" class="btn btn-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Delete Modal -->
+      {% endfor %}
+    </div>
+ 
+
+  </div>
+{% endblock %}

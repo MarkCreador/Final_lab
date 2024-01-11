@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2 class="mb-4">Category Details - {{ category.name }}</h2>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ category.name }}</h5>
+        <p class="card-text">Description: {{ category.description }}</p>
+        <hr>
+        <h6 class="card-subtitle mb-2 text-muted">Products in this Category:</h6>
+        <ul>
+          {% for product in category.product_set.all %}
+            <li>{{ product.name }} - ${{ product.price }}</li>
+          {% endfor %}
+        </ul>
+        <a href="{% url 'category-list' %}" class="btn btn-secondary">Back to Categories</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

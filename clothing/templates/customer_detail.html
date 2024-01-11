@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Customer Detail</h2>
+
+    <dl class="row">
+      <!-- Example: Full Name -->
+      <dt class="col-sm-3">Full Name:</dt>
+      <dd class="col-sm-9">{{ customer.full_name }}</dd>
+
+      <!-- Example: Email -->
+      <dt class="col-sm-3">Email:</dt>
+      <dd class="col-sm-9">{{ customer.email }}</dd>
+
+      <!-- Example: Phone -->
+      <dt class="col-sm-3">Phone:</dt>
+      <dd class="col-sm-9">{{ customer.phone }}</dd>
+
+      <!-- Add more details as needed -->
+
+    </dl>
+
+    <p>
+      <!-- Example: Back to Customer List -->
+      <a href="{% url 'customer-list' %}" class="btn btn-primary">Back to Customer List</a>
+
+      <!-- Example: Update Customer -->
+      <a href="{% url 'customer-update' pk=customer.id %}" class="btn btn-warning">Update Customer</a>
+
+      <!-- Example: Delete Customer -->
+      <a href="{% url 'customer-delete' pk=customer.id %}" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ customer.id }}">Delete Customer</a>
+    </p>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal{{ customer.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete Customer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete the customer "{{ customer.full_name }}"?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="{% url 'customer-delete' pk=customer.id %}" class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Delete Modal -->
+  </div>
+{% endblock %}

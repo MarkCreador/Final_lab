@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="mb-0">Product Detail</h2>
+          </div>
+          <div class="card-body">
+            <dl class="row">
+              <dt class="col-sm-3">ID:</dt>
+              <dd class="col-sm-9">{{ product.id }}</dd>
+
+              <dt class="col-sm-3">Name:</dt>
+              <dd class="col-sm-9">{{ product.name }}</dd>
+
+              <dt class="col-sm-3">Description:</dt>
+              <dd class="col-sm-9">{{ product.description }}</dd>
+
+              <dt class="col-sm-3">Price:</dt>
+              <dd class="col-sm-9">{{ product.price }}</dd>
+
+              <dt class="col-sm-3">Category:</dt>
+              <dd class="col-sm-9">{{ product.category }}</dd>
+
+              <dt class="col-sm-3">Brands:</dt>
+              <dd class="col-sm-9">
+                {% for brand in product.brands.all %}
+                  {{ brand.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              </dd>
+            </dl>
+          </div>
+          <div class="card-footer text-muted">
+            <a href="{% url 'product-list' %}" class="btn btn-secondary">Back to Product List</a>
+            <a href="{% url 'product-update' pk=product.id %}" class="btn btn-primary">Update Product</a>
+            <a href="{% url 'product-delete' pk=product.id %}" class="btn btn-danger">Delete Product</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
