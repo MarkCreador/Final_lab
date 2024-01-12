@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Order Item Details</h2>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Order Item ID: {{ orderitem.id }}</h5>
+        <p class="card-text">Product: {{ orderitem.product.name }}</p>
+        <p class="card-text">Quantity: {{ orderitem.quantity }}</p>
+        <p class="card-text">Subtotal: ${{ orderitem.subtotal }}</p>
+        <!-- Add more order item details as needed -->
+
+        <!-- Example: Back to Order Item List -->
+        <a href="{% url 'orderitem-list' %}" class="btn btn-secondary">Back to Order Item List</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

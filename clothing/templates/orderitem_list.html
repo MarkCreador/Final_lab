@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Order Item List</h2>
+
+    <div class="row">
+      {% for orderitem in orderitems %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Order Item ID: {{ orderitem.id }}</h5>
+              <p class="card-text">Product: {{ orderitem.product.name }}</p>
+              <p class="card-text">Quantity: {{ orderitem.quantity }}</p>
+              <p class="card-text">Subtotal: ${{ orderitem.subtotal }}</p>
+              <!-- Add more order item details as needed -->
+
+              <!-- Example: View Order Item Details -->
+              <a href="{% url 'orderitem-detail' pk=orderitem.pk %}" class="btn btn-primary">View Details</a>
+
+              <!-- Example: Update Order Item -->
+              <a href="{% url 'orderitem-update' pk=orderitem.pk %}" class="btn btn-warning">Update</a>
+
+              <!-- Example: Delete Order Item -->
+              <a href="{% url 'orderitem-delete' pk=orderitem.pk %}" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ orderitem.pk }}">Delete</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal{{ orderitem.pk }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Order Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to delete Order Item ID: {{ orderitem.id }}?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a href="{% url 'orderitem-delete' pk=orderitem.pk %}" class="btn btn-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Delete Modal -->
+      {% endfor %}
+    </div>
+
+    <!-- Add Button -->
+    <a href="{% url 'orderitem-create' %}" class="btn btn-success">Add Order Item</a>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+      <div class="pagination mt-4">
+        <span class="step-links">
+          {% if orderitems.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ orderitems.previous_page_number }}">previous</a>
+          {% endif %}
+
+          <span class="current">
+            Page {{ orderitems.number }} of {{ orderitems.paginator.num_pages }}.
+          </span>
+
+          {% if orderitems.has_next %}
+            <a href="?page={{ orderitems.next_page_number }}">next</a>
+            <a href="?page={{ orderitems.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+        </span>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

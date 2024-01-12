@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Order Detail - Order ID: {{ order.id }}</h2>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Customer: {{ order.customer.full_name }}</h5>
+        <p class="card-text">Total Amount: ${{ order.total_amount }}</p>
+        <p class="card-text">Order Date: {{ order.order_date }}</p>
+        <!-- Add more order details as needed -->
+
+        <!-- Example: Update Order -->
+        <a href="{% url 'order-update' pk=order.pk %}" class="btn btn-warning">Update Order</a>
+
+        <!-- Example: Delete Order -->
+        <a href="{% url 'order-delete' pk=order.pk %}" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete Order</a>
+      </div>
+    </div>
+
+    <!-- Add more sections for order details, such as order items, shipping details, etc. -->
+
+    <div class="mt-4">
+      <!-- Example: Back to Order List -->
+      <a href="{% url 'order-list' %}" class="btn btn-secondary">Back to Order List</a>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete Order</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete Order ID: {{ order.id }}?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <a href="{% url 'order-delete' pk=order.pk %}" class="btn btn-danger">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Delete Modal -->
+{% endblock %}

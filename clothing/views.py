@@ -5,7 +5,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Category, Brand, Product, Customer, Order, OrderItem
-from .forms import  CategoryForm, BrandForm, ProductForm
+from .forms import  CategoryForm, BrandForm, ProductForm, CustomerForm, OrderForm, OrderItemForm
 # Create your views here.
 
 class CategoryListView(ListView):
@@ -164,6 +164,68 @@ class CustomerDeleteView(DeleteView):
         response = super().delete(request, *args, **kwargs)
         return response
 
+class OrderListView(ListView):
+    model = Order
+    template_name = 'order_list.html'
+    context_object_name = 'orders'
+    paginate_by = 5
+
+class OrderDetailView(DetailView):
+    model = Order
+    template_name = 'order_detail.html'
+
+class OrderCreateView(CreateView):
+    model = Order
+    template_name = 'order_form.html'
+    fields = ['customer', 'total_amount']
+    success_url = reverse_lazy('order-list')
+
+class OrderUpdateView(UpdateView):
+    model = Order
+    template_name = 'order_form.html'
+    fields = ['customer', 'total_amount']
+    success_url = reverse_lazy('order-list')
+
+class OrderDeleteView(DeleteView):
+    model = Order
+    template_name = 'order_confirm_delete.html'
+    success_url = reverse_lazy('order-list')
+
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
+        return response
+
+class OrderItemListView(ListView):
+    model = OrderItem
+    template_name = 'orderitem_list.html'
+    context_object_name = 'orderitems'
+    paginate_by = 5
+
+class OrderItemDetailView(DetailView):
+    model = OrderItem
+    template_name = 'orderitem_detail.html'
+
+class OrderItemCreateView(CreateView):
+    model = OrderItem
+    template_name = 'orderitem_form.html'
+    fields = ['order', 'product', 'quantity']
+    success_url = reverse_lazy('orderitem-list')
+
+class OrderItemUpdateView(UpdateView):
+    model = OrderItem
+    template_name = 'orderitem_form.html'
+    fields = ['order', 'product', 'quantity']
+    success_url = reverse_lazy('orderitem-list')
+
+class OrderItemDeleteView(DeleteView):
+    model = OrderItem
+    template_name = 'orderitem_confirm_delete.html'
+    success_url = reverse_lazy('orderitem-list')
+
+    def delete(self, request, *args, **kwargs):
+        response = super().delete(request, *args, **kwargs)
+        return response
+    
     
 
 

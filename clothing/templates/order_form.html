@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>{% if order.id %}Update{% else %}Create{% endif %} Order</h2>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <!-- Example: Customer -->
+      <div class="form-group">
+        <label for="id_customer">Customer:</label>
+        <select id="id_customer" name="customer" class="form-control">
+          {% for customer in customers %}
+            <option value="{{ customer.id }}" {% if order.customer and order.customer.id == customer.id %}selected{% endif %}>{{ customer.full_name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Example: Total Amount -->
+      <div class="form-group">
+        <label for="id_total_amount">Total Amount:</label>
+        <input type="text" id="id_total_amount" name="total_amount" class="form-control" value="{{ order.total_amount }}">
+      </div>
+
+      <!-- Example: Order Date -->
+      <div class="form-group">
+        <label for="id_order_date">Order Date:</label>
+        <input type="date" id="id_order_date" name="order_date" class="form-control" value="{{ order.order_date }}">
+      </div>
+
+      <!-- Add more form fields as needed -->
+
+      <button type="submit" class="btn btn-primary">Save Order</button>
+    </form>
+
+    <p>
+      {% if order.id %}
+        <!-- Example: Cancel and View Order Detail -->
+        <a href="{% url 'order-detail' pk=order.id %}" class="btn btn-secondary">Cancel and View Order Detail</a>
+      {% else %}
+        <!-- Example: Cancel and View Order List -->
+        <a href="{% url 'order-list' %}" class="btn btn-secondary">Cancel and View Order List</a>
+      {% endif %}
+    </p>
+  </div>
+{% endblock %}

@@ -29,5 +29,24 @@ urlpatterns = [
     path('customers/create/', CustomerCreateView.as_view(), name='customer-create'),
     path('customers/<int:pk>/update/', CustomerUpdateView.as_view(), name='customer-update'),
     path('customers/<int:pk>/delete/', CustomerDeleteView.as_view(), name='customer-delete'),
+
+    # Order URLs
+    path('orders/', OrderListView.as_view(), name='order-list'),
+    path('orders/<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
+    path('orders/create/', OrderCreateView.as_view(), name='order-create'),
+    path('orders/<int:pk>/update/', OrderUpdateView.as_view(), name='order-update'),
+    path('orders/<int:pk>/delete/', OrderDeleteView.as_view(), name='order-delete'),
+
+    # OrderItem URLs
+    path('orderitems/', OrderItemListView.as_view(), name='orderitem-list'),
+    path('orderitems/<int:pk>/', OrderItemDetailView.as_view(), name='orderitem-detail'),
+    path('orderitems/create/', OrderItemCreateView.as_view(), name='orderitem-create'),
+    path('orderitems/<int:pk>/update/', OrderItemUpdateView.as_view(), name='orderitem-update'),
+    path('orderitems/<int:pk>/delete/', OrderItemDeleteView.as_view(), name='orderitem-delete'),
+    
+    
+
+    
+
     
 ]
